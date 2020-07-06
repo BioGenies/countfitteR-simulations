@@ -67,13 +67,13 @@ twostep_sim_zip <- pblapply(r, function(ith_r){
         }) %>%
           unlist()
         data.frame(model = "zip",
-                   method = "twostep",
+                   method = "two-step",
                    n = ith_n, 
                    lambda = ith_lambda,
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   na = sum(is.na(correct)))
+                   uncomptable = sum(is.na(correct)))
 
     }) %>%
       bind_rows()
@@ -115,14 +115,14 @@ twostep_sim_zinb <- pblapply(r, function(ith_r){
         }) %>%
           unlist()
         data.frame(model = "zip",
-                   method = "twostep",
+                   method = "two-step",
                    n = ith_n, 
                    lambda = ith_lambda,
                    size = ith_lambda * ith_size,
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   na = sum(is.na(correct)))
+                   uncomptable = sum(is.na(correct)))
       }) %>%
         bind_rows()  
     }) %>%
@@ -164,12 +164,12 @@ twostep_sim_pois <- pblapply(lambda, function(ith_lambda){
       }) %>%
         unlist()
       data.frame(model = "pois",
-                 method = "twostep",
+                 method = "two-step",
                  n = ith_n, 
                  lambda = ith_lambda,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 na = sum(is.na(correct)))
+                 uncomptable = sum(is.na(correct)))
       
   }) %>%
     bind_rows()
@@ -208,13 +208,13 @@ twostep_sim_nb <- pblapply(lambda, function(ith_lambda){
         }) %>%
           unlist()
         data.frame(model = "nb",
-                   method = "twostep",
+                   method = "two-step",
                    n = ith_n, 
                    lambda = ith_lambda,
                    size = ith_lambda * ith_size,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   na = sum(is.na(correct)))
+                   uncomptable = sum(is.na(correct)))
     }) %>%
       bind_rows()
   }) %>%

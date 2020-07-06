@@ -30,13 +30,13 @@ bic_sim_zip <- pblapply(r, function(ith_r){
       }) %>%
         unlist() 
       data.frame(model = "zip",
-                 method = "bic",
+                 method = "countfitteR",
                  n = ith_n, 
                  lambda = ith_lambda,
                  r = ith_r,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 na = 0)
+                 uncomptable = 0)
       
     }) %>%
       bind_rows()
@@ -73,14 +73,14 @@ bic_sim_zinb <- pblapply(r, function(ith_r){
           unlist() 
         
         data.frame(model = "zinb",
-                   method = "bic",
+                   method = "countfitteR",
                    n = ith_n, 
                    lambda = ith_lambda,
                    size = ith_lambda * ith_size,
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   na = 0)
+                   uncomptable = 0)
       }) %>%
         bind_rows()  
     }) %>%
@@ -117,12 +117,12 @@ bic_sim_pois <- pblapply(lambda, function(ith_lambda){
       }) %>%
         unlist() 
       data.frame(model = "pois",
-                 method = "bic",
+                 method = "countfitteR",
                  n = ith_n, 
                  lambda = ith_lambda,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 na = 0)
+                 uncomptable = 0)
 
   }) %>%
     bind_rows()
@@ -156,13 +156,13 @@ bic_sim_nb <- pblapply(lambda, function(ith_lambda){
         }) %>%
           unlist() 
         data.frame(model = "nb",
-                   method = "bic",
+                   method = "countfitteR",
                    n = ith_n, 
                    lambda = ith_lambda,
                    size = ith_lambda * ith_size,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   na = 0)
+                   uncomptable = 0)
  
     }) %>%
       bind_rows()  
