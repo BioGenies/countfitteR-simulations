@@ -214,7 +214,7 @@ twostep_sim_nb <- pblapply(lambda, function(ith_lambda){
                    size = ith_lambda * ith_size,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   uncomptable = sum(is.na(correct)))
+                   uncomputable = sum(is.na(correct)))
     }) %>%
       bind_rows()
   }) %>%
