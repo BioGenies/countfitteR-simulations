@@ -6,7 +6,7 @@ The analysis conducted in this article resulted in a framework for the automatic
 
 ## How to reproduce the main part of the analysis?
 
-Run `scripts/countfitter_simulations.R` and `scripts/two_step_simulations.R`. The first script performs simulations for CountFitter, the second script performs simulations for Two-Step-Procedure.
+Run `scripts/countfitter_simulations.R` and `scripts/two_step_simulations.R`. The first script performs simulations for countfitteR, the second script performs simulations for Two-Step-Procedure.
 
 ## How to generate results and plots for publication?
 
