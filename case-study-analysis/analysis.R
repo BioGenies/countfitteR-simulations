@@ -50,7 +50,7 @@ all_fits <- fit_counts(counts, model = "all")
 selected_model <- select_model(all_fits)
 table(selected_model[["chosen_model"]])
 
-mutate(selected_model, 
+p <- mutate(selected_model, 
        chosen_model = factor(chosen_model, levels = c("Poisson",
                                                       "ZIP",
                                                       "NB",
@@ -61,3 +61,6 @@ mutate(selected_model,
   scale_x_discrete("Selected model") +
   scale_y_continuous("Number of plates") +
   theme_bw()
+
+ggsave("./files/fig_case_study.eps", plot = p, width = 20, height = 10, units = "cm")
+
