@@ -74,3 +74,6 @@ p <- mutate(selected_model,
 ggsave("./files/fig_case_study.eps", plot = p, width = 20, 
        height = 10, units = "cm")
 
+group_by(selected_model, channel, chosen_model) %>% 
+  summarise(total = length(chosen_model)) %>% 
+  mutate(frac = total/sum(total))
