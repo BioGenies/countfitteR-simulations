@@ -45,22 +45,32 @@ library(countfitteR)
 
 dat <- read.csv2("./case-study-data/results.csv")
 
-counts <- split(dat[["Red.Foci"]], dat[["Img.Hash..md5."]])
-all_fits <- fit_counts(counts, model = "all")
-selected_model <- select_model(all_fits)
-table(selected_model[["chosen_model"]])
+selected_model <- do.call(rbind, 
+                          lapply(c("Red.Foci", "Green.Foci"), 
+                                 function(ith_channel) {
+                                   counts <- split(dat[[ith_channel]], dat[["Img.Hash..md5."]])
+                                   all_fits <- fit_counts(counts, model = "all")
+                                   cbind(channel = ith_channel,
+                                         select_model(all_fits))
+                                 }))
+
+
+
 
 p <- mutate(selected_model, 
        chosen_model = factor(chosen_model, levels = c("Poisson",
                                                       "ZIP",
                                                       "NB",
-                                                      "ZINB"))) %>% 
+                                                      "ZINB")),
+       channel = factor(channel, labels = c("FITC", "APC"))) %>% 
   ggplot(aes(x = chosen_model)) +
   geom_bar() +
   geom_label(aes(y = ..count.., label = ..count..), stat = "count") +
+  facet_wrap(~ channel) +
   scale_x_discrete("Selected model") +
-  scale_y_continuous("Number of plates") +
+  scale_y_continuous("Number of images") +
   theme_bw()
 
-ggsave("./files/fig_case_study.eps", plot = p, width = 20, height = 10, units = "cm")
+ggsave("./files/fig_case_study.eps", plot = p, width = 20, 
+       height = 10, units = "cm")
 
