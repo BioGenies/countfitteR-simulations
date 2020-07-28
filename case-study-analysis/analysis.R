@@ -3,6 +3,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(countfitteR)
+library(latex2exp)
 # read_aklides <- function(x) {
 #   
 #   all_sheets <- excel_sheets(x)
@@ -62,11 +63,12 @@ p <- mutate(selected_model,
                                                       "ZIP",
                                                       "NB",
                                                       "ZINB")),
-       channel = factor(channel, labels = c("FITC", "APC"))) %>% 
+       channel = factor(channel, labels = c(TeX("$\\gamma H2AX$"), 
+                                            TeX("$53BP1$")))) %>% 
   ggplot(aes(x = chosen_model)) +
   geom_bar() +
   geom_label(aes(y = ..count.., label = ..count..), stat = "count") +
-  facet_wrap(~ channel) +
+  facet_wrap(~ channel, labeller = "label_parsed") +
   scale_x_discrete("Selected model") +
   scale_y_continuous("Number of images") +
   theme_bw()
