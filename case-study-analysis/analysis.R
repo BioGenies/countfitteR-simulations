@@ -44,38 +44,60 @@ library(latex2exp)
 # 
 # sort(unique(overview_data[["ObjectNr_n"]]))
 
-dat <- read.csv2("./case-study-data/results.csv")
+dat_nucdetect <- read.csv2("./case-study-data/results.csv") %>% 
+  select(-Nucleus) %>% 
+  setNames(c("md5", "Red.Foci", "Green.Foci")) %>% 
+  mutate(Software = "NucDetect")
+
+dat_cellprofiler <- inner_join(read.csv("./case-study-data/assignment.csv"),
+                               read.csv("./case-study-data/counts.csv")) %>% 
+  select(-Number) %>% 
+  setNames(c("md5", "Red.Foci", "Green.Foci")) %>% 
+  mutate(Software = "CellProfiler")
+
+dat <- rbind(dat_cellprofiler, dat_nucdetect)
 
 selected_model <- do.call(rbind, 
-                          lapply(c("Red.Foci", "Green.Foci"), 
-                                 function(ith_channel) {
-                                   counts <- split(dat[[ith_channel]], dat[["Img.Hash..md5."]])
-                                   all_fits <- fit_counts(counts, model = "all")
-                                   cbind(channel = ith_channel,
-                                         select_model(all_fits))
+                          lapply(unique(dat[["Software"]]), 
+                                 function(ith_software) {
+                                   software_dat <- filter(dat, Software == ith_software)
+                                   do.call(rbind, 
+                                           lapply(c("Red.Foci", "Green.Foci"), 
+                                                  function(ith_channel) {
+                                                    counts <- split(software_dat[[ith_channel]], 
+                                                                    software_dat[["md5"]])
+                                                    # if the image is empty, CellProfiler give an
+                                                    # empty vector
+                                                    counts[lengths(counts) == 0] <- 0
+                                                    all_fits <- fit_counts(counts, model = "all")
+                                                    cbind(software = ith_software,
+                                                          channel = ith_channel,
+                                                          select_model(all_fits))
+                                                  }))
                                  }))
 
 
 
 
+
 p <- mutate(selected_model, 
-       chosen_model = factor(chosen_model, levels = c("Poisson",
-                                                      "ZIP",
-                                                      "NB",
-                                                      "ZINB")),
-       channel = factor(channel, labels = c(TeX("$\\gamma H2AX$"), 
-                                            TeX("$53BP1$")))) %>% 
+            chosen_model = factor(chosen_model, levels = c("Poisson",
+                                                           "ZIP",
+                                                           "NB",
+                                                           "ZINB")),
+            channel = factor(channel, labels = c(TeX("$\\gamma H2AX$"), 
+                                                 TeX("$53BP1$")))) %>% 
   ggplot(aes(x = chosen_model)) +
   geom_bar() +
   geom_label(aes(y = ..count.., label = ..count..), stat = "count") +
-  facet_wrap(~ channel, labeller = "label_parsed") +
+  facet_grid(software ~ channel, labeller = "label_parsed") +
   scale_x_discrete("Selected model") +
   scale_y_continuous("Number of images") +
   theme_bw()
 
 ggsave("./files/fig_case_study.eps", plot = p, width = 20, 
-       height = 10, units = "cm")
+       height = 15, units = "cm")
 
-group_by(selected_model, channel, chosen_model) %>% 
+group_by(selected_model, software, channel, chosen_model) %>% 
   summarise(total = length(chosen_model)) %>% 
   mutate(frac = total/sum(total))
