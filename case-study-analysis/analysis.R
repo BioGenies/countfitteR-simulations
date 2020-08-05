@@ -76,10 +76,6 @@ selected_model <- do.call(rbind,
                                                   }))
                                  }))
 
-
-
-
-
 p <- mutate(selected_model, 
             chosen_model = factor(chosen_model, levels = c("Poisson",
                                                            "ZIP",
@@ -101,3 +97,6 @@ ggsave("./files/fig_case_study.eps", plot = p, width = 20,
 group_by(selected_model, software, channel, chosen_model) %>% 
   summarise(total = length(chosen_model)) %>% 
   mutate(frac = total/sum(total))
+
+group_by(selected_model, software, channel) %>% 
+  summarise(is_poisson = mean(chosen_model == "Poisson")*100) 
