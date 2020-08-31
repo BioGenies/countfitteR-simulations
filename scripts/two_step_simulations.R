@@ -43,7 +43,7 @@ n <- c(50, 100, 200)
 lambda <- c(2, 5, 10)
 r = seq(from = 0.1, to = 0.9, length.out = 9)
 size_scale <- c(0.5, 1, 2)
-iter <- 100
+iter <- 1000
 
 ############# ZIP
 
@@ -73,7 +73,7 @@ twostep_sim_zip <- pblapply(r, function(ith_r){
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   uncomptable = sum(is.na(correct)))
+                   uncomputable = sum(is.na(correct)))
 
     }) %>%
       bind_rows()
@@ -111,10 +111,10 @@ twostep_sim_zinb <- pblapply(r, function(ith_r){
               
               chosen_model2 == "zinb"},
             error = function(e) NA)
-           
+            
         }) %>%
           unlist()
-        data.frame(model = "zip",
+        data.frame(model = "zinb",
                    method = "two-step",
                    n = ith_n, 
                    lambda = ith_lambda,
@@ -122,7 +122,7 @@ twostep_sim_zinb <- pblapply(r, function(ith_r){
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   uncomptable = sum(is.na(correct)))
+                   uncomputable = sum(is.na(correct)))
       }) %>%
         bind_rows()  
     }) %>%
@@ -169,7 +169,7 @@ twostep_sim_pois <- pblapply(lambda, function(ith_lambda){
                  lambda = ith_lambda,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 uncomptable = sum(is.na(correct)))
+                 uncomputable = sum(is.na(correct)))
       
   }) %>%
     bind_rows()

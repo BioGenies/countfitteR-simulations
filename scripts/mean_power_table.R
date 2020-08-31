@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(xtable)
 library(gt)
-iter <- 100
+iter <- 1000
 
 load("./data/bic_sim_zip.rda")
 load("./data/bic_sim_zinb.rda")

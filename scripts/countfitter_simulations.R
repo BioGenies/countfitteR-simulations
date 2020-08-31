@@ -36,7 +36,7 @@ bic_sim_zip <- pblapply(r, function(ith_r){
                  r = ith_r,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 uncomptable = 0)
+                 uncomputable = 0)
       
     }) %>%
       bind_rows()
@@ -80,7 +80,7 @@ bic_sim_zinb <- pblapply(r, function(ith_r){
                    r = ith_r,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   uncomptable = 0)
+                   uncomputable = 0)
       }) %>%
         bind_rows()  
     }) %>%
@@ -122,7 +122,7 @@ bic_sim_pois <- pblapply(lambda, function(ith_lambda){
                  lambda = ith_lambda,
                  pow_mean = mean(correct, na.rm = TRUE),
                  pow_sd = sd(correct, na.rm = TRUE),
-                 uncomptable = 0)
+                 uncomputable = 0)
 
   }) %>%
     bind_rows()
@@ -162,7 +162,7 @@ bic_sim_nb <- pblapply(lambda, function(ith_lambda){
                    size = ith_lambda * ith_size,
                    pow_mean = mean(correct, na.rm = TRUE),
                    pow_sd = sd(correct, na.rm = TRUE),
-                   uncomptable = 0)
+                   uncomputable = 0)
  
     }) %>%
       bind_rows()  
