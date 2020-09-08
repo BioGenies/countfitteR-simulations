@@ -181,7 +181,6 @@ plot_fitcmp(fitcmp)
 results <- summary_fitlist(fc)
 
 # Sort the dataset according to their BIC values and print them as table.
-# 
 
 knitr::kable(results[order (results[["BIC"]]),])
 
