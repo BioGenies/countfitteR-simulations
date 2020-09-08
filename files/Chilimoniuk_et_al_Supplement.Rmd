@@ -106,6 +106,9 @@ The bar charts represent theoretical counts depending on the chosen distribution
 # Usage of the countfitteR software via the R console
 
 ```{r include = TRUE, echo = TRUE, message = TRUE, warning = FALSE, cache=FALSE}
+# Below is an example of how to work with the countfitteR software in the 
+# R environment. For a simple example data was simulated.
+#
 # Generate poisson (Poisson_data) and negative binomial (nBinomial_data) 
 # distributed count data in silico. Here 200 random integer numbers 
 # (= 200 cells) were generated for both distributions.
