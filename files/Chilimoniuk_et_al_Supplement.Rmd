@@ -66,7 +66,7 @@ variety of areas where non-Poisson distributed counting data is prevalent.
 
 ---
 
-# General information
+# General information about the countfitteR graphical user interface
 
 ## Charts
 
@@ -102,7 +102,91 @@ The bar charts represent theoretical counts depending on the chosen distribution
 
 **Confidence level**: the confidence level of confidence intervals.
 
-**Count distributions**: count distributions fitted to data: Poisson, Negative Binomial, Zero-Inflated Poisson, Zero-Inflated Negative Binomial. Possible distributions are described further in the manual.  
+**Count distributions**: count distributions fitted to data: Poisson, Negative Binomial, Zero-Inflated Poisson, Zero-Inflated Negative Binomial. Possible distributions are described further in the manual.
+
+# Usage of the countfitteR software via the R console
+
+```{r include = TRUE, echo = TRUE, message = TRUE, warning = FALSE, cache=FALSE}
+# Generate poisson (Poisson_data) and negative binomial (nBinomial_data) 
+# distributed count data in silico. Here 200 random integer numbers 
+# (= 200 cells) were generated for both distributions.
+# The simulation was set to mimic data with a low number of counts (low number
+# of foci per cell in average).
+
+set.seed(007)
+df <- data.frame(Poisson_data = rpois(200, 1.85), 
+                 nBinomial_data = rnbinom(200, 8.5, 0.8))
+
+# Inspect the first 10 and last 10 data points via the head() and tail() 
+# functions, respectively.
+
+head(df, n = 10)
+tail(df, n = 10)
+
+# Visualize the count data after tabulation of the frequencies of both data sets.
+# The red vertical lines indicate the arithmetic means of the data samples.
+
+mean_poisson <- mean(df[, "Poisson_data"])
+mean_binomial <- mean(df[, "nBinomial_data"])
+
+par(mfrow = c(1,2), cex = 0.8)
+
+# Plot for the data with a Poisson distribution
+barplot(table(df[, "Poisson_data"]), main = "Ground truth:\nPoisson distribution", 
+        xlab = "Value", ylab = "Counts")
+legend("topright", paste("~", mean_poisson, "counts/cell"), bty = "n")
+
+
+# Plot for the data with a negative binomial distribution
+barplot(table(df[, "nBinomial_data"]), main = "Ground truth:\nBinomial distribution", 
+        xlab = "Value", ylab = "Counts")
+legend("topright", paste("~", mean_binomial, "counts/cell"), bty = "n")
+
+# Note the arithmetic means (Mean ~ 2) and median (Median ~ 2) of the samples 
+# are very similar, as determined by the summary() function.
+
+summary(df)
+
+# For the analysis the countfitteR package is loaded
+
+library(countfitteR)
+
+# Next we use the fit_counts() function to fit counts to distributions. In our
+# case the data are fitted to the Poisson, Negative Binomial (NB), Zero-Inflated 
+# Poisson (ZIP) and the Zero-Inflated Negative Binomial (ZINB) distributions.
+
+
+fc <- fit_counts(df, model = "all") 
+summ <- summary_fitlist(fc) 
+
+# Next, the decide() function is used to select the most appropriate 
+# distribution for the count data in the html-friendly format.
+
+decide(summ, separate = TRUE)
+
+# Next, the empirical distribution of counts with the distribution defined by 
+# the model fitted to counts are compared. The bar charts represent theoretical 
+# counts depending on the chosen distribution. Red dots describe the real number 
+# of counts.
+
+fitcmp <- compare_fit(df, fitlist = fit_counts(df, model = "all"))
+plot_fitcmp(fitcmp)
+
+# Finally, the counts are fitted to model(s) using the count name as the 
+# explanatory variable. Estimates are presented in the table below along with the 
+# BIC values of their models from the summary_fitlist() function. Estimated 
+# coefficients of models (lambda for all distributions, theta for NB and ZINB, 
+# r for ZIP and ZINB).
+
+results <- summary_fitlist(fc)
+
+# Sort the dataset according to their BIC values and print them as table.
+# 
+
+knitr::kable(results[order (results[["BIC"]]),])
+
+```
+
 
 # Overdispersion of count data
 
