@@ -24,17 +24,19 @@ bibliography: countfitter.bib
 Count data, one of the most common data types in many fields. In personalized 
 medicine and pharmacology, the analysis is relevant for numerous applications, 
 such as cancer and ageing research and in the evaluation of drug efficacy 
-[@schneider_open_2019; @redon_recent_2011]. By default it is assumed to follow 
-the Poisson distribution. This assumption, however, may lead to biased results 
-and faulty conclusions in data bodies with excess zero values (zero-inflation 
-[@limScoreTestsZeroinflation2013; @yangTestingOverdispersionZeroinflated2009]), 
-a variance larger than the mean (overdispersion), or both. In such cases, the 
-standard assumption of a Poisson distribution would skew the estimation of mean 
-and variance, and other models like the negative binomial (NB), zero-inflated 
-Poisson or zero-inflated NB distributions should be employed. The model chosen 
-has an influence on the parameter estimation (mean value and confidence 
-interval). Yet the choice of the most suitable distribution model is not 
-trivial. To support and simplify this process, we have implemented the 
+[@schneider_open_2019; @redon_recent_2011; 
+@lomaxBiologicalConsequencesRadiationinduced2013; @nikolova_h2ax_2014; @martin_statistical_2013]. By 
+default it is assumed to follow the Poisson distribution. This assumption, 
+however, may lead to biased results and faulty conclusions in data bodies with 
+excess zero values (zero-inflation [@limScoreTestsZeroinflation2013; 
+@yangTestingOverdispersionZeroinflated2009]), a variance larger than the mean 
+(overdispersion), or both. In such cases, the standard assumption of a Poisson 
+distribution would skew the estimation of mean and variance, and other models 
+like the negative binomial (NB), zero-inflated Poisson or zero-inflated NB 
+distributions should be employed. The model chosen has an influence on the 
+parameter estimation (mean value and confidence interval). Yet the choice of the 
+most suitable distribution model is not trivial. To support and simplify this 
+process, we have implemented the 
 [countfitteR](https://CRAN.R-project.org/package=countfitteR) software, which is 
 provided as an R package and a web server. We show the application of our 
 software based on examples of count data from phenotypic imaging as used in 
@@ -44,7 +46,7 @@ for monitoring DNA damage in cancer, aging research and the evaluation of drug
 efficacy, and are detected and quantified by foci formation in fluorescence 
 microscopy. In analyzing a large number of datasets of a molecular 
 pharmacological markers (phosphorylated Histone H2AX and p53 binding protein 
-[@ruhe_molecular_2019]), 
+[@ruhe_molecular_2019; @clingen_histone_2008]), 
 [countfitteR](https://CRAN.R-project.org/package=countfitteR) demonstrated an 
 equal or superior statistical performance compared to the usually employed 
 two-step procedure, with an overall power of up to 98 %. In addition, it still 
