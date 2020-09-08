@@ -63,7 +63,6 @@ the Poisson distribution taking second place. Originally designed for the
 analysis of foci in biomedical image data, 
 [countfitteR](https://CRAN.R-project.org/package=countfitteR) can be used in a 
 variety of areas where non-Poisson distributed counting data is prevalent.
-
 ---
 
 # General information about the countfitteR graphical user interface
@@ -126,21 +125,17 @@ tail(df, n = 10)
 # Visualize the count data after tabulation of the frequencies of both data sets.
 # The red vertical lines indicate the arithmetic means of the data samples.
 
-mean_poisson <- mean(df[, "Poisson_data"])
-mean_binomial <- mean(df[, "nBinomial_data"])
-
 par(mfrow = c(1,2), cex = 0.8)
 
 # Plot for the data with a Poisson distribution
 barplot(table(df[, "Poisson_data"]), main = "Ground truth:\nPoisson distribution", 
         xlab = "Value", ylab = "Counts")
-legend("topright", paste("~", mean_poisson, "counts/cell"), bty = "n")
-
+legend("topright", paste("~", mean(df[, "Poisson_data"]), "counts/cell"), bty = "n")
 
 # Plot for the data with a negative binomial distribution
 barplot(table(df[, "nBinomial_data"]), main = "Ground truth:\nBinomial distribution", 
         xlab = "Value", ylab = "Counts")
-legend("topright", paste("~", mean_binomial, "counts/cell"), bty = "n")
+legend("topright", paste("~", mean(df[, "nBinomial_data"]), "counts/cell"), bty = "n")
 
 # Note the arithmetic means (Mean ~ 2) and median (Median ~ 2) of the samples 
 # are very similar, as determined by the summary() function.
@@ -155,12 +150,13 @@ library(countfitteR)
 # case the data are fitted to the Poisson, Negative Binomial (NB), Zero-Inflated 
 # Poisson (ZIP) and the Zero-Inflated Negative Binomial (ZINB) distributions.
 
-
 fc <- fit_counts(df, model = "all") 
 summ <- summary_fitlist(fc) 
 
 # Next, the decide() function is used to select the most appropriate 
 # distribution for the count data in the html-friendly format.
+# Note: the decide() function gives a verbal output for the decision 
+# stating how substantial a model fit is.
 
 decide(summ, separate = TRUE)
 
@@ -183,7 +179,6 @@ results <- summary_fitlist(fc)
 # Sort the dataset according to their BIC values and print them as table.
 
 knitr::kable(results[order (results[["BIC"]]),])
-
 ```
 
 
