@@ -145,7 +145,7 @@ Zero-inflated Negative Binomial               |$$P\{X = k\} = \begin{cases}r + (
 ## Results of the simulation
 
 **Figure S1**: Empirical power of countfitteR and two-step test for Poisson distribution. n: number of counts
-in the sample. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell)
+in the sample. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell).
 
 ```{r, out.width="0.8\\linewidth", include=TRUE, fig.align="center", echo=FALSE}
 knitr::include_graphics("S1-eps-converted-to.pdf")
