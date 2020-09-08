@@ -104,26 +104,16 @@ Overdispersion may be caused by the increased variability of counts, for example
 
 Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real average number of foci per cell.
 
-**Table S1**: Expected value of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
+**Table S1**: Expected value and variance of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
 
-Distribution <br> name  | Expected value
--------------------|-------------
-Poisson            |$$E(X) = \lambda $$
-ZIP                |$$E(X) = (1 - r) \lambda $$
-NB                 |$$E(X) = \lambda $$
-ZINB               |$$E(X) = (1 - r)  \lambda $$  <!-- keep it here, because otherwise table parse oddly  -->
+Distribution <br> name  | Expected value | Variance
+-------------------|-------------|-----------------------
+Poisson            |$$E(X) = \lambda $$            |$$\textrm{var}(X) = \lambda $$
+ZIP                |$$E(X) = (1 - r) \lambda $$                |$$\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)$$
+NB                 |$$E(X) = \lambda $$                 |$$\textrm{var}(X) = \lambda + \frac{\lambda^2}{\theta} $$
+ZINB               |$$E(X) = (1 - r)  \lambda $$               |$$\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \frac{1}{\theta} \right)$$  <!-- keep it here, because otherwise table parse oddly  -->
 
 Depending on the value of $r$ the variance of ZIP and ZINB may be smaller or bigger than the variance of Poisson distribution. In case of the NB distribution, the variance is always bigger than for the Poisson distribution, although the difference becomes negligible, when the $\theta$ is much bigger than $\lambda^2$.
-
-**Table S2**: Expected variance of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
-
-Distribution <br> name  | Variance
--------------------|-------------
-Poisson            |$$\textrm{var}(X) = \lambda $$
-ZIP                |$$\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)$$
-NB                 |$$\textrm{var}(X) = \lambda + \frac{\lambda^2}{\theta} $$
-ZINB               |$$\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \frac{1}{\theta} \right)$$
-
 
 Parameters:
 
@@ -133,7 +123,7 @@ Parameters:
   
 Usually the NB distribution is parameterized using $\mu$ and $\theta$, but to make comparison clearer, we use $\lambda$ instead of $\mu$. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma ($\Gamma$) distributions.  
 
-**Table S3**: Probability mass functions of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
+**Table S2**: Probability mass functions of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
 
 Distribution <br> name  | pmf 
 -------------------|-------------
