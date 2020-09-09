@@ -184,6 +184,25 @@ results <- summary_fitlist(fc)
 knitr::kable(results[order (results[["BIC"]]),])
 ```
 
+# Sample records of counting data
+
+The countfitteRsoftware contains sample data sets of counting data. These were obtained from measurements on human cells. Further information about the data can be found in the documentation of the countfitteR-package.
+
+- `case_study`:	Short version of the 'case_study_FITC' for the biomarker phosphorylated Histone H2AX
+- `case_study_all:`	Case study with two fluorescent dyes (biomarker phosphorylated Histone H2AX \& biomarker p53 binding protein)
+- `case_study_APC`:	Case study for APC dye for the biomarker p53 binding protein
+- `case_study_FITC`:	Case study for FITC dye for the biomarker phosphorylated Histone H2AX
+
+```{r NAME, include = TRUE, echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE}
+
+# Output the first five columns and rows measured values of the dataset 
+# `case_study_FITC`. Each measuring point of a data series corresponds to the 
+# number of gamma H2AX foci per cell (~> 0 = no foci per cell).
+
+countfitteR::case_study_FITC[1:5, 1:5]
+```
+
+
 
 # Overdispersion of count data
 
