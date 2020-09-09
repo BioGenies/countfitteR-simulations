@@ -1,6 +1,6 @@
 ---
 title: "*Supplement for*: countfitteR: efficient selection of count distributions to assess DNA damage"
-author: "Jarosław Chilimoniuk, Alicja Gosiewska, Jadwiga Słowik, Romano Weiss, Markus Deckert, Stefan Rödiger, and Michał Burdukiewicz"
+author: "Jarosław Chilimoniuk, Alicja Gosiewska, Jadwiga Słowik, Romano Weiss, Markus Deckert,  \nStefan Rödiger, and Michał Burdukiewicz"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   pdf_document:
@@ -26,9 +26,13 @@ knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, progress = FALSE
 library(knitr)
 ```
 
+\newpage
+
 ---
 
-**Abstract**: Count data, one of the most common data types in many fields. In personalized 
+# Background
+
+Count data, one of the most common data types in many fields. In personalized 
 medicine and pharmacology, the analysis is relevant for numerous applications, 
 such as cancer and ageing research and in the evaluation of drug efficacy 
 [@schneider_open_2019; @redon_recent_2011; 
@@ -63,6 +67,7 @@ the Poisson distribution taking second place. Originally designed for the
 analysis of foci in biomedical image data, 
 [countfitteR](https://CRAN.R-project.org/package=countfitteR) can be used in a 
 variety of areas where non-Poisson distributed counting data is prevalent.
+
 ---
 
 # General information about the countfitteR graphical user interface
