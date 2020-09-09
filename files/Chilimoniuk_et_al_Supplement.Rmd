@@ -164,9 +164,25 @@ summ <- summary_fitlist(fc)
 # Next, the decide() function is used to select the most appropriate 
 # distribution for the count data in the html-friendly format.
 # Note: the decide() function gives a verbal output for the decision 
-# stating how substantial a model fit is.
+# stating how substantial a model fit is. Since the output of the 
+# decide() function is optimized for HTML we use the str_break() function
+# by Yihui Xie (Jun 7 '14 at 18:25, https://stackoverflow.com/questions/24020617)
+# to wrap the text.
 
-decide(summ, separate = TRUE)
+str_break <- function(x, width = 80L) {
+  n = nchar(x)
+  if (n <= width) return(x)
+  n1 = seq(1L, n, by = width)
+  n2 = seq(width, n, by = width)
+  if (n %% width != 0) n2 = c(n2, n)
+  substring(x, n1, n2)
+}
+
+decision <- decide(summ, separate = TRUE)
+
+# From this the evidence for the model with the lowest BIC can be assessed.
+
+str_break(decision)
 
 # Next, the empirical distribution of counts with the distribution defined by 
 # the model fitted to counts are compared. The bar charts represent theoretical 
@@ -240,12 +256,12 @@ Usually the NB distribution is parameterized using $\mu$ and $\theta$, but to ma
 
 **Table S2**: Probability mass functions of Poisson, ZIP, NB and ZINB distributions. $\lambda$: Poisson parameter (number of occurrences, e.g., average number of foci per cell). $r$: zero inflation (fraction of occurrences treated as zeros, e.g., fraction of cells treated by system as having no foci regardless of their real state). $\theta$: dispersion parameter.
 
-Distribution <br> name  | pmf 
--------------------|-------------
-Poisson            |$$P\{X = k\} = \frac{\lambda^k \exp^{-\lambda}}{k!} $$
-Zero-inflated Poisson                |$$P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\text{if } k = 0\\ r \frac{\lambda^k \exp^{-\lambda}}{k!},\text{if } k = 1, 2, \ldots \end{cases} $$
-Negative Binomial                 |$$P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k$$
-Zero-inflated Negative Binomial               |$$P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}$$
+Distribution <br> name  | pmf   |
+-------------------|-------------|---------|
+Poisson            |$$P\{X = k\} = \frac{\lambda^k \exp^{-\lambda}}{k!} $$ |
+Zero-inflated Poisson                |$$P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\text{if } k = 0\\ r \frac{\lambda^k \exp^{-\lambda}}{k!},\text{if } k = 1, 2, \ldots \end{cases} $$ |
+Negative Binomial                 |$$P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k$$ |
+Zero-inflated Negative Binomial               |$$P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}$$ |
 
 ## Results of the simulation
 
